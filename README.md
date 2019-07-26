@@ -35,3 +35,7 @@ I kept the base repository structure, removed all the methods except those requi
 #### fourth stage (implement my last changes)
 
 ...
+
+## Percentage to turn the repository visible : 80%
+
+## Note: It's still under development, and there are changes i couldn't implement (have them ready but need to translate to C# because they're in VB.NET).
