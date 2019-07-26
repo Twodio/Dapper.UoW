@@ -7,7 +7,7 @@ namespace Dapper.UnitOfWork.Example
 {
 	class Program
     {
-        private const string ConnectionString = @"";
+        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Utilizador\Documents\UnitOfWorkDatabase.mdf;Integrated Security=True;Connect Timeout=30";
 
 		static void Main(string[] args)
 		{
@@ -23,16 +23,21 @@ namespace Dapper.UnitOfWork.Example
                     //uow.Commit();
 
                     // working test
-                    var person = uow.Get(new GetPersobByIdCommand(2)).FirstOrDefault();
-                    System.Diagnostics.Debug.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
+                    var person = uow.Get(new GetPersobByIdCommand<int>(28)).FirstOrDefault();
+                    Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
+                    var people = uow.Get(new GetPeopleCommand());
+                    foreach (var p in people)
+                    {
+                        Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             }
 
-            //Task.Run(async () => await MainAsync(args));
+            Task.Run(async () => await MainAsync(args));
 
             Console.WriteLine("Press any key to exit");
 			Console.ReadKey();
@@ -52,9 +57,14 @@ namespace Dapper.UnitOfWork.Example
                 //System.Diagnostics.Debug.WriteLine($"Person: {person.Name}");
 
                 // working test
-                var people = await uow.GetAsync(new GetPersobByIdCommand(2));
-                var person = people.FirstOrDefault();
-                System.Diagnostics.Debug.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
+                var person = (await uow.GetAsync(new GetPersobByIdCommand<int>(29))).FirstOrDefault();
+                //var person = people.FirstOrDefault();
+                Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
+                var people = await uow.GetAsync(new GetPeopleCommand());
+                foreach(var p in people)
+                {
+                    Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
+                }
             }
         }
     }
