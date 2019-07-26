@@ -29,7 +29,7 @@ namespace Dapper.UnitOfWork
             return Retry.Do(() => command.Execute(_connection, _transaction), _retryOptions);
         }
 
-        public IEnumerable<T> GetAll<T>(IGetAllCommand<T> command)
+        public IEnumerable<T> Get<T, TId>(IGetCommand<T, TId> command)
         {
             return Retry.Do(() => command.Execute(_connection, _transaction), _retryOptions);
         }
@@ -66,7 +66,7 @@ namespace Dapper.UnitOfWork
             return Retry.DoAsync(() => command.Execute(_connection, _transaction, cancellationToken), _retryOptions);
         }
 
-        public Task<IEnumerable<T>> GetAllAsync<T>(IGetAllCommandAsync<T> command, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<T>> GetAsync<T, TId>(IGetCommandAsync<T, TId> command, CancellationToken cancellationToken = default)
         {
             return Retry.DoAsync(() => command.Execute(_connection, _transaction, cancellationToken), _retryOptions);
         }
