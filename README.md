@@ -20,29 +20,6 @@ Since i coulnd't unfold the Task returned in the Async method, i could only retu
 
 ## Changes
 
-petrhaus's repository had a very simple logic that would work in all the possible cases i could imagine for my next project and was well organized as i expected it to be, the only problem was the lazy loading and his transient exception that i didn't need - at first.
-
-#### first stage
-
-After checking the repository and my goal, i decided that i would implement [exponential backoff](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/implement-resilient-applications/explore-custom-http-call-retries-exponential-backoff) from microsoft's page, as they are the same. Got some backlashes but i managed to work it out.
-
-#### second stage
-
-I tried to implement lazy loading and keep the simple queries, but the structure wouldn't allow, and the repository didn't have a generic CRUD, so, only two kind of queries could be executed. I was able to do a partial implementation but there was no consistency, since my async method were being consumed twice and were genereating too much code and the command weren't fully compatible.
-
-#### third stage (actual)
-
-I kept the base repository structure, removed all the methods except those required by the repository itself. 
-
-- Added new interfaces and removed the olds for IUnitOfWork and ICommads.
-- Added two new objects (PersonEntity and AddressEntity) and removed the olds.
-- Removed the old tests in the Main method.
-- Added generic crud to the UoW's interface and Command's as well.
-
-#### fourth stage (implement my last changes)
-
-...
-
-## Percentage to turn the repository visible : 80%
+See all changes history with details [here](https://github.com/Twodio/Dapper.UoW/wiki/Changelog).
 
 ## Note: It's still under development, and there are changes i couldn't implement (have them ready but need to translate to C# because they're in VB.NET).
