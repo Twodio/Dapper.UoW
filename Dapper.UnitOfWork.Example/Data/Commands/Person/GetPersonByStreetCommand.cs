@@ -22,7 +22,7 @@ namespace Dapper.UnitOfWork.Example.Data.Commands
 				a.Street = @Street
 		";
 
-        public bool RequiresTransaction => true;
+        public bool RequiresTransaction => false;
 
         private dynamic _streetName;
 

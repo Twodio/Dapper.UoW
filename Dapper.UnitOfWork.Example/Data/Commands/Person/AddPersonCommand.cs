@@ -25,7 +25,7 @@ namespace Dapper.UnitOfWork.Example.Data.Commands
         private readonly PersonEntity _entity;
 
         // Set this to true prevents invoking the command without an explicit transaction
-        public bool RequiresTransaction => false;
+        public bool RequiresTransaction => true;
 
         public AddPersonCommand(PersonEntity entity)
             => _entity = entity;

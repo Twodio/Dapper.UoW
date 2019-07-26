@@ -20,7 +20,7 @@ namespace Dapper.UnitOfWork.Example.Data.Commands
 				p.Id = @Id
 		";
 
-        public bool RequiresTransaction => true;
+        public bool RequiresTransaction => false;
 
         private dynamic _personId;
 
