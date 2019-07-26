@@ -3,3 +3,8 @@
 ################################################################################
 
 /Dapper.UnitOfWork/bin/Debug
+/Dapper.UnitOfWork.Example/bin/Debug
+/.vs/Dapper.UnitOfWork/v15
+/Dapper.UnitOfWork/obj/Debug
+/Dapper.UnitOfWork/obj
+/Dapper.UnitOfWork.Example/obj
