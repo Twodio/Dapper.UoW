@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dapper.UnitOfWork.Example.Data.Commands
 {
-    public class GetPersobByIdCommand : IGetCommand<PersonEntity>, IGetCommandAsync<PersonEntity>
+    public class GetPersobByIdCommand<TId> : IGetCommand<PersonEntity, TId>, IGetCommandAsync<PersonEntity, TId>
     {
         private const string _sql = @"
 			SELECT
@@ -22,9 +22,9 @@ namespace Dapper.UnitOfWork.Example.Data.Commands
 
         public bool RequiresTransaction => true;
 
-        private int _personId;
+        private dynamic _personId;
 
-        public GetPersobByIdCommand(int personId)
+        public GetPersobByIdCommand(TId personId)
             => _personId = personId;
 
         public IEnumerable<PersonEntity> Execute(IDbConnection connection, IDbTransaction transaction)
@@ -35,7 +35,7 @@ namespace Dapper.UnitOfWork.Example.Data.Commands
             },
                 new { Id = _personId }, transaction, splitOn: "Id");
 
-        Task<IEnumerable<PersonEntity>> IGetCommandAsync<PersonEntity>.Execute(IDbConnection connection, IDbTransaction transaction, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<PersonEntity>> Execute(IDbConnection connection, IDbTransaction transaction, CancellationToken cancellationToken = default)
             => connection.QueryAsync<PersonEntity, AddressEntity, PersonEntity>(new CommandDefinition(_sql,
                 new { Id = _personId }, transaction: transaction, cancellationToken:cancellationToken), 
                 (person, address) =>
