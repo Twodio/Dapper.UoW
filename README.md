@@ -1,5 +1,5 @@
 # Dapper.UoW - Dapper Unit Of Work
-This dapper unit of work repository implementation, originally implemented using petrhaus's UOW repository, but after many tests i couldn't make it work as i expected. Still, thanks for your generosity for sharing his repository, i could enlight myself and find a good structure for my UoW.
+This dapper unit of work repository implementation, originally implemented using [petrhaus's UOW repository](https://github.com/outmatic/Dapper.UnitOfWork), but after many tests i couldn't make it work as i expected. Still, thanks for your generosity for sharing his repository, i could enlight myself and find a good structure for my UoW.
 
 Be sure to change your VS language version to C# >= ![C# Version](https://img.shields.io/badge/version-7.x-green.svg) and your .NET Core to >= ![.NET Core Version](https://img.shields.io/badge/version-2.x-green.svg)
 
