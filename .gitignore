@@ -8,3 +8,5 @@
 /Dapper.UnitOfWork/obj/Debug
 /Dapper.UnitOfWork/obj
 /Dapper.UnitOfWork.Example/obj
+/Dapper.UnitOfWork.Example/Dapper.UnitOfWork.Example.csproj.user
+/.vs
