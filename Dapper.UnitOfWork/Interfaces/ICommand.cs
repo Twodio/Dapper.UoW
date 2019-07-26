@@ -23,13 +23,13 @@ namespace Dapper.UnitOfWork.Interfaces
         T Execute(IDbConnection connection, IDbTransaction transaction);
     }
 
-    public interface IGetCommand<out T>
+    public interface IGetCommand<out T, TId>
     {
         bool RequiresTransaction { get; }
         IEnumerable<T> Execute(IDbConnection connection, IDbTransaction transaction);
     }
 
-    public interface IGetAllCommand<out T>
+    public interface IGetCommand<out T>
     {
         bool RequiresTransaction { get; }
         IEnumerable<T> Execute(IDbConnection connection, IDbTransaction transaction);
@@ -53,13 +53,13 @@ namespace Dapper.UnitOfWork.Interfaces
         Task<T> Execute(IDbConnection connection, IDbTransaction transaction, CancellationToken cancellationToken = default);
     }
 
-    public interface IGetCommandAsync<T>
+    public interface IGetCommandAsync<T, TId>
     {
         bool RequiresTransaction { get; }
         Task<IEnumerable<T>> Execute(IDbConnection connection, IDbTransaction transaction, CancellationToken cancellationToken = default);
     }
 
-    public interface IGetAllCommandAsync<T>
+    public interface IGetCommandAsync<T>
     {
         bool RequiresTransaction { get; }
         Task<IEnumerable<T>> Execute(IDbConnection connection, IDbTransaction transaction, CancellationToken cancellationToken = default);
