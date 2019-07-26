@@ -13,6 +13,7 @@ namespace Dapper.UnitOfWork.Example
 		{
 			var factory = new UnitOfWorkFactory(ConnectionString);
 
+            // tansactional is enabled, but won't be necessary because we're running non saving queries
             using (var uow = factory.Create(true))
             {
                 try
@@ -23,8 +24,12 @@ namespace Dapper.UnitOfWork.Example
                     //uow.Commit();
 
                     // working test
+
+                    // find a person by its Id
                     var person = uow.Get(new GetPersobByIdCommand<int>(28)).FirstOrDefault();
                     Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
+
+                    // fetch all the people in the database
                     var people = uow.Get(new GetPeopleCommand());
                     foreach (var p in people)
                     {
@@ -47,6 +52,7 @@ namespace Dapper.UnitOfWork.Example
         {
             var factory = new UnitOfWorkFactory(ConnectionString);
 
+            // tansactional is enabled, but won't be necessary because we're running non saving queries
             using (var uow = await factory.CreateAsync(true, retryOptions: new RetryOptions(5, 100, new SqlTransientExceptionDetector())))
             {
                 //AddressEntity address = new AddressEntity { Street = "Somewhere", Region = "Random Region" };
@@ -57,14 +63,21 @@ namespace Dapper.UnitOfWork.Example
                 //System.Diagnostics.Debug.WriteLine($"Person: {person.Name}");
 
                 // working test
+
+                // find a person by its Id
                 var person = (await uow.GetAsync(new GetPersobByIdCommand<int>(29))).FirstOrDefault();
-                //var person = people.FirstOrDefault();
                 Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
+
+                // fetch all the people in the database
                 var people = await uow.GetAsync(new GetPeopleCommand());
                 foreach(var p in people)
                 {
                     Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
                 }
+
+                // find one person by its address street's name
+                var personOne = (await uow.GetAsync(new GetPersonByStreetCommand<string>("Elm Street"))).FirstOrDefault();
+                Console.WriteLine($"Person: {personOne?.Name} ({personOne?.Address?.Street})");
             }
         }
     }
