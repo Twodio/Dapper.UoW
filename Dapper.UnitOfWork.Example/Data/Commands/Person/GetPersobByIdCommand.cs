@@ -15,6 +15,7 @@ namespace Dapper.UnitOfWork.Example.Data.Commands
 			FROM
 				People p
                     JOIN Addresses a ON
+
                         p.Address_Id = a.Id
 			WHERE
 				p.Id = @Id

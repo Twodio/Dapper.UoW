@@ -5,79 +5,70 @@ namespace Dapper.UnitOfWork
 {
     public class Retry
     {
-        private static Task HandleExceptionAsync(RetryOptions retryOptions, Exception ex, int retryCount)
-        {
-            if (!retryOptions.ExceptionDetector.ShouldRetryOn(ex) || retryCount >= retryOptions.MaxRetries)
-                throw ex;
+        public readonly RetryOptions retryOptions;
 
-            var sleepTime = TimeSpan.FromMilliseconds(Math.Pow(retryOptions.WaitMillis, retryCount));
-            return Task.Delay(sleepTime);
-        }
+        public Retry(int maxRetries = 5, int delayMilliseconds = 200, int maxDelayMilliseconds = 200)
+            => retryOptions = new RetryOptions(maxRetries, delayMilliseconds, maxDelayMilliseconds);
 
-        public static T Do<T>(Func<T> func, RetryOptions retryOptions)
+        public T Do<T>(Func<T> func)
         {
             if (func == null)
                 throw new ArgumentNullException(nameof(func));
 
-            if (retryOptions?.ExceptionDetector == null)
+            if (retryOptions == null)
                 return func();
 
-            var retryCount = 1;
-            while (retryCount <= retryOptions.MaxRetries)
+            var counter = 1;
+            while(counter <= retryOptions._maxRetries)
             {
                 try
                 {
                     return func();
-                }
-                catch (Exception ex)
+                } catch(Exception ex) when (ex is TimeoutException || ex is System.Data.SqlClient.SqlException)
                 {
-                    HandleExceptionAsync(retryOptions, ex, retryCount).GetAwaiter().GetResult();
+                    Task.Run(async () => await retryOptions.Delay(counter, ex));
                 }
-
-                retryCount++;
+                counter++;
             }
-
             return default;
         }
 
-        public static async Task<T> DoAsync<T>(Func<Task<T>> func, RetryOptions retryOptions)
+        public async Task<T> DoAsync<T>(Func<Task<T>> func)
         {
             if (func == null)
                 throw new ArgumentNullException(nameof(func));
 
-            if (retryOptions?.ExceptionDetector == null)
+            if (retryOptions == null)
                 return await func();
 
-            var retryCount = 1;
-            while (retryCount <= retryOptions.MaxRetries)
+            var counter = 1;
+            while (counter <= retryOptions._maxRetries)
             {
                 try
                 {
                     return await func();
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is TimeoutException || ex is System.Data.SqlClient.SqlException)
                 {
-                    await HandleExceptionAsync(retryOptions, ex, retryCount);
+                    await retryOptions.Delay(counter, ex);
                 }
-
-                retryCount++;
+                counter++;
             }
-
             return default;
         }
 
-        public static void Do(Action action, RetryOptions retryOptions)
+        public void Do(Action action)
             => Do(() =>
             {
                 action();
                 return true;
-            }, retryOptions);
+            });
 
-        public static async Task DoAsync(Func<Task> action, RetryOptions retryOptions)
+        public async Task DoAsync(Func<Task> action)
             => await DoAsync(async () =>
             {
                 await action();
                 return true;
-            }, retryOptions);
+            });
     }
 }

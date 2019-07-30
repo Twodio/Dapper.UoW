@@ -6,7 +6,7 @@ using System.Linq;
 namespace Dapper.UnitOfWork
 {
 	// Adapted from https://github.com/aspnet/EntityFrameworkCore/blob/master/src/EFCore.SqlServer/Storage/Internal/SqlServerTransientExceptionDetector.cs
-	public class SqlTransientExceptionDetector : IExceptionDetector
+	public class SqlTransientExceptionDetector
 	{
 		private static readonly int[] HandledErrorNumbers =
 		{
@@ -33,7 +33,7 @@ namespace Dapper.UnitOfWork
 			49920  // Cannot process request. Too many operations in progress for subscription "%ld".
         };
 
-		public bool ShouldRetryOn(Exception ex)
+		public static bool ShouldRetryOn(Exception ex)
 		{
 			if (!(ex is SqlException sqlException))
 				return ex is TimeoutException;

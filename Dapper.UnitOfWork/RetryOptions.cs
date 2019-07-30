@@ -1,34 +1,36 @@
 ﻿using Dapper.UnitOfWork.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace Dapper.UnitOfWork
 {
 	public class RetryOptions
 	{
-		public static RetryOptions Default { get; set; }
+        public int _maxRetries { get; }
+        public int _delayMilliseconds { get; }
+        public int _maxDelayMilliseconds { get; }
+        private int _pow;
 
-		static RetryOptions()
-			=> Default = new RetryOptions(1, 100, new SqlTransientExceptionDetector());
+        public RetryOptions(int maxRetries, int delayMilliseconds, int maxDelayMilliseconds)
+        {
+            _maxRetries = maxRetries;
+            _delayMilliseconds = delayMilliseconds;
+            _maxDelayMilliseconds = maxDelayMilliseconds;
+            _pow = 1;
+        }
 
-		public int MaxRetries { get; }
-		public int WaitMillis { get; }
-		public IExceptionDetector ExceptionDetector { get; set; }
-
-		public RetryOptions(int maxRetries, int waitMillis, IExceptionDetector exceptionDetector)
-		{
-			if (maxRetries < 1)
-				throw new ArgumentOutOfRangeException(nameof(maxRetries), maxRetries, $"{nameof(maxRetries)} cannot be less than 1");
-			if (waitMillis < 1)
-				throw new ArgumentOutOfRangeException(nameof(waitMillis), waitMillis, $"{nameof(waitMillis)} cannot be less than 1");
-
-			MaxRetries = maxRetries;
-			WaitMillis = waitMillis;
-			ExceptionDetector = exceptionDetector;
-		}
-
-		public RetryOptions(int maxRetries, int waitMillis) : this(maxRetries, waitMillis, new SqlTransientExceptionDetector())
-		{	
-
-		}
-	}
+        public Task Delay(int counter, Exception exception = default)
+        {
+            if(!SqlTransientExceptionDetector.ShouldRetryOn(exception) || counter == _maxRetries)
+            {
+                throw exception;
+            }
+            if(counter < 31)
+            {
+                _pow = _pow << 1;
+            }
+            var timer = Math.Min(_delayMilliseconds * (_pow - 1) / 2, _maxDelayMilliseconds);
+            return Task.Delay(timer);
+        }
+    }
 }

@@ -8,8 +8,8 @@ namespace Dapper.UnitOfWork
 {
 	public interface IUnitOfWorkFactory
 	{
-		IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, RetryOptions retryOptions = null);
-        Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, RetryOptions retryOptions = null, CancellationToken cancellationToken = default);
+		IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = null);
+        Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = null, CancellationToken cancellationToken = default);
     }
 
 	public class UnitOfWorkFactory : IUnitOfWorkFactory
@@ -19,18 +19,31 @@ namespace Dapper.UnitOfWork
 		public UnitOfWorkFactory(string connectionString)
 			=> _connectionString = connectionString;
 
-		public IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, RetryOptions retryOptions = null)
+		public IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = default)
 		{
 			var conn = new SqlConnection(_connectionString);
-			conn.Open();
-			return new UnitOfWork(conn, transactional, isolationLevel, retryOptions);
+            if (retry != null)
+            {
+                retry.Do(()=> conn.Open());
+            } else
+            {
+                conn.Open();
+            }
+            return new UnitOfWork(conn, transactional, isolationLevel, retry);
 		}
 
-        public async Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, RetryOptions retryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = null, CancellationToken cancellationToken = default)
         {
             var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync(cancellationToken);
-            return new UnitOfWork(conn, transactional, isolationLevel, retryOptions);
+            if (retry != null)
+            {
+                await retry.DoAsync(() => conn.OpenAsync(cancellationToken));
+            }
+            else
+            {
+                await conn.OpenAsync(cancellationToken);
+            }
+            return new UnitOfWork(conn, transactional, isolationLevel, retry);
         }
 	}
 }

@@ -7,14 +7,14 @@ namespace Dapper.UnitOfWork.Example
 {
 	class Program
     {
-        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Utilizador\Documents\UnitOfWorkDatabase.mdf;Integrated Security=True;Connect Timeout=30";
+        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Miriacelle\Documents\MyDatabase.mdf;Integrated Security=True;Connect Timeout=30";
 
 		static void Main(string[] args)
 		{
 			var factory = new UnitOfWorkFactory(ConnectionString);
 
             // tansactional is enabled, but won't be necessary because we're running non saving queries
-            using (var uow = factory.Create(true))
+            using (var uow = factory.Create(true, retry: new Retry()))
             {
                 try
                 {
@@ -30,11 +30,11 @@ namespace Dapper.UnitOfWork.Example
                     Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
 
                     // fetch all the people in the database
-                    var people = uow.Get(new GetPeopleCommand());
-                    foreach (var p in people)
-                    {
-                        Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
-                    }
+                    //var people = uow.Get(new GetPeopleCommand());
+                    //foreach (var p in people)
+                    //{
+                    //    Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +42,7 @@ namespace Dapper.UnitOfWork.Example
                 }
             }
 
-            Task.Run(async () => await MainAsync(args));
+            //Task.Run(async () => await MainAsync(args));
 
             Console.WriteLine("Press any key to exit");
 			Console.ReadKey();
@@ -53,7 +53,7 @@ namespace Dapper.UnitOfWork.Example
             var factory = new UnitOfWorkFactory(ConnectionString);
 
             // tansactional is enabled, but won't be necessary because we're running non saving queries
-            using (var uow = await factory.CreateAsync(true, retryOptions: new RetryOptions(5, 100, new SqlTransientExceptionDetector())))
+            using (var uow = await factory.CreateAsync(true))
             {
                 //AddressEntity address = new AddressEntity { Street = "Somewhere", Region = "Random Region" };
                 //address.Id = await uow.ExecuteAsync<int>(new AddAddressCommand(ref address));
