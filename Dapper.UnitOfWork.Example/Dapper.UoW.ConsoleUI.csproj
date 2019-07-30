@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dapper.UnitOfWork\Dapper.UnitOfWork.csproj" />
+    <ProjectReference Include="..\Dapper.UnitOfWork\Dapper.UoW.csproj" />
   </ItemGroup>
 
 </Project>

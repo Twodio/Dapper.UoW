@@ -1,4 +1,5 @@
 ﻿using Dapper.UnitOfWork.Interfaces;
+using Dapper.UoW.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -6,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace Dapper.UnitOfWork
 {
-	public interface IUnitOfWorkFactory
-	{
-		IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = null);
-        Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = null, CancellationToken cancellationToken = default);
-    }
-
 	public class UnitOfWorkFactory : IUnitOfWorkFactory
 	{
 		private readonly string _connectionString;
@@ -19,31 +14,18 @@ namespace Dapper.UnitOfWork
 		public UnitOfWorkFactory(string connectionString)
 			=> _connectionString = connectionString;
 
-		public IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = default)
+		public IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
 			var conn = new SqlConnection(_connectionString);
-            if (retry != null)
-            {
-                retry.Do(()=> conn.Open());
-            } else
-            {
-                conn.Open();
-            }
-            return new UnitOfWork(conn, transactional, isolationLevel, retry);
+            conn.Open();
+            return new UnitOfWork(conn, transactional, isolationLevel);
 		}
 
-        public async Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, Retry retry = null, CancellationToken cancellationToken = default)
+        public async Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, CancellationToken cancellationToken = default)
         {
             var conn = new SqlConnection(_connectionString);
-            if (retry != null)
-            {
-                await retry.DoAsync(() => conn.OpenAsync(cancellationToken));
-            }
-            else
-            {
-                await conn.OpenAsync(cancellationToken);
-            }
-            return new UnitOfWork(conn, transactional, isolationLevel, retry);
+            await conn.OpenAsync(cancellationToken);
+            return new UnitOfWork(conn, transactional, isolationLevel);
         }
 	}
 }

@@ -7,26 +7,19 @@ namespace Dapper.UnitOfWork.Example
 {
 	class Program
     {
-        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Miriacelle\Documents\MyDatabase.mdf;Integrated Security=True;Connect Timeout=30";
+        private const string ConnectionString = @"your_connection_string";
 
 		static void Main(string[] args)
 		{
 			var factory = new UnitOfWorkFactory(ConnectionString);
 
             // tansactional is enabled, but won't be necessary because we're running non saving queries
-            using (var uow = factory.Create(true, retry: new Retry()))
+            using (var uow = factory.Create(true))
             {
                 try
                 {
-                    //AddressEntity address = new AddressEntity { Street = "My Street", Region = "my Region" };
-                    //uow.Execute<int>(new AddAddressCommand(ref address));
-                    //uow.Execute(new AddPersonCommand(new PersonEntity { Name = "No One", Age = 28, Address_id = address.Id }));
-                    //uow.Commit();
-
-                    // working test
-
                     // find a person by its Id
-                    var person = uow.Get(new GetPersobByIdCommand<int>(28)).FirstOrDefault();
+                    var person = uow.Get(new GetPersobByIdCommand<int>(2)).FirstOrDefault();
                     Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
 
                     // fetch all the people in the database
