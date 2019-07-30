@@ -7,12 +7,3 @@ C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.
 C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\netstandard1.3\Dapper.UoW.AssemblyInfo.cs
 C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\netstandard1.3\Dapper.UoW.dll
 C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\netstandard1.3\Dapper.UoW.pdb
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\bin\Debug\netstandard1.3\Dapper.UoW.deps.json
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\bin\Debug\netstandard1.3\Dapper.UoW.dll
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\bin\Debug\netstandard1.3\Dapper.UoW.pdb
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\obj\Debug\netstandard1.3\Dapper.UoW.csprojAssemblyReference.cache
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\obj\Debug\netstandard1.3\Dapper.UoW.csproj.CoreCompileInputs.cache
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\obj\Debug\netstandard1.3\Dapper.UoW.AssemblyInfoInputs.cache
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\obj\Debug\netstandard1.3\Dapper.UoW.AssemblyInfo.cs
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\obj\Debug\netstandard1.3\Dapper.UoW.dll
-C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UoW\obj\Debug\netstandard1.3\Dapper.UoW.pdb

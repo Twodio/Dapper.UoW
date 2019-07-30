@@ -11,66 +11,99 @@ namespace Dapper.UoW.ConsoleUI
 
 		static void Main(string[] args)
 		{
-			var factory = new UnitOfWorkFactory(ConnectionString);
+            Console.WriteLine($"Fetching one result from database...\n");
+            PrintPerson(2);
 
-            // tansactional is enabled, but won't be necessary because we're running non saving queries
-            using (var uow = factory.Create(true))
+            Console.WriteLine($"\nListing all the results from database...\n");
+            PrintPeople();
+
+            // async methods calls
+
+            //Console.WriteLine($"Fetching one result from database:");
+            //Task.Run(async () => await PrintPersonAsync(2));
+
+            //Console.WriteLine($"Listing all the results from database:");
+            //Task.Run(async () => await PrintPeopleAsync());
+
+            Console.WriteLine("\nPress any key to exit");
+            Console.ReadKey();
+        }
+
+        private static void PrintPerson(int Id)
+        {
+            try
             {
-                try
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                using (var uow = factory.Create(true))
                 {
-                    // find a person by its Id
-                    var person = uow.Get(new GetPersobByIdCommand<int>(2)).FirstOrDefault();
+                    var person = uow.Get(new GetPersobByIdCommand<int>(Id)).FirstOrDefault();
                     Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
-
-                    // fetch all the people in the database
-                    //var people = uow.Get(new GetPeopleCommand());
-                    //foreach (var p in people)
-                    //{
-                    //    Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
                 }
             }
-
-            //Task.Run(async () => await MainAsync(args));
-
-            Console.WriteLine("Press any key to exit");
-			Console.ReadKey();
-		}
-
-        private static async Task MainAsync(string[] args)
-        {
-            var factory = new UnitOfWorkFactory(ConnectionString);
-
-            // tansactional is enabled, but won't be necessary because we're running non saving queries
-            using (var uow = await factory.CreateAsync(true))
+            catch (Exception ex)
             {
-                //AddressEntity address = new AddressEntity { Street = "Somewhere", Region = "Random Region" };
-                //address.Id = await uow.ExecuteAsync<int>(new AddAddressCommand(ref address));
-                //await uow.ExecuteAsync(new AddPersonCommand(new PersonEntity { Name = "Jon Doe", Age = 28, Address_id = address.Id }));
-                //uow.Commit();
-                //var person = await uow.QueryAsync<PersonEntity>(new GetPersonByIdQuery(2));
-                //System.Diagnostics.Debug.WriteLine($"Person: {person.Name}");
+                Console.WriteLine(ex.Message);
+            }
+        }
 
-                // working test
-
-                // find a person by its Id
-                var person = (await uow.GetAsync(new GetPersobByIdCommand<int>(29))).FirstOrDefault();
-                Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
-
-                // fetch all the people in the database
-                var people = await uow.GetAsync(new GetPeopleCommand());
-                foreach(var p in people)
+        private static void PrintPeople()
+        {
+            try
+            {
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                using (var uow = factory.Create(true))
                 {
-                    Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
+                    // fetch all the people in the database
+                    var people = uow.Get(new GetPeopleCommand());
+                    foreach (var p in people)
+                    {
+                        Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
-                // find one person by its address street's name
-                var personOne = (await uow.GetAsync(new GetPersonByStreetCommand<string>("Elm Street"))).FirstOrDefault();
-                Console.WriteLine($"Person: {personOne?.Name} ({personOne?.Address?.Street})");
+        private async static Task PrintPersonAsync(int Id)
+        {
+            try
+            {
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                using (var uow = await factory.CreateAsync(true))
+                {
+                    // find one person by its address street's name
+                    var personOne = (await uow.GetAsync(new GetPersonByStreetCommand<int>(Id))).FirstOrDefault();
+                    Console.WriteLine($"Person: {personOne?.Name} ({personOne?.Address?.Street})");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async static Task PrintPeopleAsync()
+        {
+            try
+            {
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                using (var uow = await factory.CreateAsync(true))
+                {
+                    // fetch all the people in the database
+                    var people = await uow.GetAsync(new GetPeopleCommand());
+                    foreach (var p in people)
+
+                    {
+                        Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
