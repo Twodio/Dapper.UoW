@@ -23,7 +23,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Dapper" Version="1.60.6" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
