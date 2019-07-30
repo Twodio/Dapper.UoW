@@ -1,0 +1,14 @@
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.deps.json
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.runtimeconfig.json
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.runtimeconfig.dev.json
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.dll
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.pdb
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.dll
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\bin\Debug\netcoreapp2.0\Dapper.UnitOfWork.pdb
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.csprojAssemblyReference.cache
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.csproj.CoreCompileInputs.cache
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.AssemblyInfoInputs.cache
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.AssemblyInfo.cs
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.csproj.CopyComplete
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.dll
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork.Example\obj\Debug\netcoreapp2.0\Dapper.UnitOfWork.Example.pdb

@@ -1,0 +1,10 @@
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\bin\Debug\net451\Dapper.UnitOfWork.dll
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\bin\Debug\net451\Dapper.UnitOfWork.pdb
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\bin\Debug\net451\Dapper.dll
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.csprojAssemblyReference.cache
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.csproj.CoreCompileInputs.cache
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.AssemblyInfoInputs.cache
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.AssemblyInfo.cs
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.csproj.CopyComplete
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.dll
+C:\Users\Miriacelle\source\repos\Dapper.UnitOfWork\src\Dapper.UnitOfWork\Dapper.UoW\Dapper.UnitOfWork\obj\Debug\net451\Dapper.UnitOfWork.pdb

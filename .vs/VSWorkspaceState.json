@@ -1,8 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Dapper.UnitOfWork",
-    "\\Dapper.UnitOfWork.Example"
+    "\\Dapper.UoW"
   ],
   "SelectedNode": "\\Dapper.UnitOfWork.sln",
   "PreviewInSolutionExplorer": false
