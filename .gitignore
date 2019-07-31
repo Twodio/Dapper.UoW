@@ -2,11 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Dapper.Uow/bin/Debug
-/Dapper.Uow.ConsoleUI/bin/Debug
-/.vs/Dapper.Uow/v15
-/Dapper.Uow/obj/Debug
-/Dapper.Uow/obj
-/Dapper.Uow.ConsoleUI/obj
-/Dapper.Uow.ConsoleUI/Dapper.Uow.ConsoleUI.csproj.user
+/Dapper.UoW/bin/Debug
+/Dapper.UoW.ConsoleUI/bin/Debug
+/.vs/Dapper.UoW/v15
+/Dapper.UoW/obj/Debug
+/Dapper.UoW/obj
+/Dapper.UoW.ConsoleUI/obj
+/Dapper.UoW.ConsoleUI/Dapper.UoW.ConsoleUI.csproj.user
 /.vs
