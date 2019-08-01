@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dapper.UoW.ConsoleUI.Data.Commands
 {
-    public class GetPersobByIdCommand<TId> : IGetCommand<PersonEntity, TId>, IGetCommandAsync<PersonEntity, TId>
+    public class GetPersonByIdCommand<TId> : IGetCommand<PersonEntity, TId>, IGetCommandAsync<PersonEntity, TId>
     {
         private const string _sql = @"
 			SELECT
@@ -25,7 +25,7 @@ namespace Dapper.UoW.ConsoleUI.Data.Commands
 
         private dynamic _personId;
 
-        public GetPersobByIdCommand(TId personId)
+        public GetPersonByIdCommand(TId personId)
             => _personId = personId;
 
         public IEnumerable<PersonEntity> Execute(IDbConnection connection, IDbTransaction transaction)
