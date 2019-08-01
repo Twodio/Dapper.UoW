@@ -5,6 +5,11 @@ using Dapper.UoW.ConsoleUI.Data.Commands;
 
 namespace Dapper.UoW.ConsoleUI
 {
+    /// <summary>
+    /// here are some mockups for the methods i've implemented in my repository
+    /// they're meant to be customizable, which means, you can create your own commands
+    /// according to your requirements and change them as you wish to make them fit in your application context
+    /// </summary>
 	class Program
     {
         // the connection string for the database you'll be using
@@ -17,6 +22,9 @@ namespace Dapper.UoW.ConsoleUI
 
             Console.WriteLine($"\nListing all the results from database...\n");
             PrintPeople();
+
+            //Console.WriteLine($"\nExecuting a delete command...\n");
+            //RemovePerson(6);
 
             // async methods calls
 
@@ -43,7 +51,7 @@ namespace Dapper.UoW.ConsoleUI
                 // initialize the repository with transaction explicitly set to false
                 using (var uow = factory.Create())
                 {
-                    var person = uow.Get(new GetPersobByIdCommand<int>(Id)).FirstOrDefault();
+                    var person = uow.Get(new GetPersonByIdCommand<int>(Id)).FirstOrDefault();
                     Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
                 }
             }
@@ -70,6 +78,33 @@ namespace Dapper.UoW.ConsoleUI
                     {
                         Console.WriteLine($"Person: {p?.Name} ({p?.Address?.Street})");
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// remove an entry from the database
+        /// </summary>
+        /// <param name="Id"></param>
+        private static void RemovePerson(int Id)
+        {
+            try
+            {
+                // initialize the connection builder
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                // initialize the repository with transactions set to true
+                using (var uow = factory.Create(true))
+                {
+                    // executes the command
+                    var result = uow.Delete(new DeletePersonByIdCommand(6));
+                    // prints the affected rows
+                    Console.WriteLine($"Deleted: {result}");
+                    // commits the changes
+                    uow.Commit();
                 }
             }
             catch (Exception ex)
