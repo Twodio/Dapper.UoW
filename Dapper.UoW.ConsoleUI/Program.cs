@@ -14,7 +14,7 @@ namespace Dapper.UoW.ConsoleUI
 	class Program
     {
         // the connection string for the database you'll be using
-        private const string ConnectionString = @"your_connection_string";
+        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Miriacelle\Documents\MyDatabase.mdf;Integrated Security=True;Connect Timeout=30";
 
 		static void Main(string[] args)
 		{
