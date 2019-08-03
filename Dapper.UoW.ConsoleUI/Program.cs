@@ -34,6 +34,9 @@ namespace Dapper.UoW.ConsoleUI
             //Console.WriteLine($"Listing all the results from database:");
             //Task.Run(async () => await PrintPeopleAsync());
 
+            //Console.WriteLine($"\nExecuting a delete command...\n");
+            //Task.Run(async () => await RemovePersonAsync(6));
+
             Console.WriteLine("\nPress any key to exit");
             Console.ReadKey();
         }
@@ -101,6 +104,34 @@ namespace Dapper.UoW.ConsoleUI
                 {
                     // executes the command
                     var result = uow.Delete(new DeletePersonByIdCommand(6));
+                    // prints the affected rows
+                    Console.WriteLine($"Deleted: {result}");
+                    // commits the changes
+                    uow.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// asynchronously remove an entry from the database
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        private async static Task RemovePersonAsync(int Id)
+        {
+            try
+            {
+                // initialize the connection builder
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                // initialize the repository with transactions set to true
+                using (var uow = await factory.CreateAsync(true))
+                {
+                    // executes the command
+                    var result = await uow.DeleteAsync(new DeletePersonByIdCommand(6));
                     // prints the affected rows
                     Console.WriteLine($"Deleted: {result}");
                     // commits the changes
