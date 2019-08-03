@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper.UoW.ConsoleUI.Data.Commands;
+using Dapper.UoW.ConsoleUI.Data.Entities;
 
 namespace Dapper.UoW.ConsoleUI
 {
@@ -17,11 +18,17 @@ namespace Dapper.UoW.ConsoleUI
 
 		static void Main(string[] args)
 		{
-            Console.WriteLine($"Fetching one result from database...\n");
-            PrintPerson(2);
+            Console.WriteLine($"\nAdding a new entry to the database...\n");
+            var person = new PersonEntity { Name = "Jane Smith", Age = 28 };
+            var address = new AddressEntity { Street = "Somewhere", Region = "Somwehere" };
+            AddPerson(person, address);
+            Console.WriteLine($"\nIdentity check: {person?.Id}\n");
 
-            Console.WriteLine($"\nListing all the results from database...\n");
-            PrintPeople();
+            Console.WriteLine($"Fetching one result from database...\n");
+            PrintPerson(1);
+
+            //Console.WriteLine($"\nListing all the results from database...\n");
+            //PrintPeople();
 
             //Console.WriteLine($"\nExecuting a delete command...\n");
             //RemovePerson(6);
@@ -39,6 +46,34 @@ namespace Dapper.UoW.ConsoleUI
 
             Console.WriteLine("\nPress any key to exit");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// add a new person with its address into the database
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="address"></param>
+        private static void AddPerson(PersonEntity person, AddressEntity address)
+        {
+            try
+            {
+                // initialize the connection builder
+                var factory = new UnitOfWorkFactory(ConnectionString);
+                // initialize the repository with transaction explicitly set to false
+                using (var uow = factory.Create(true))
+                {
+                    uow.Add(new AddAddressCommand(ref address));
+                    person.Address_id = address.Id;
+                    uow.Add(new AddPersonCommand(person));
+                    uow.Commit();
+                    Console.WriteLine($"{person?.Id}#{person?.Name} ({address?.Street}) added");
+                }
+            }
+            catch (Exception ex)
+            {
+                // print the error in console
+                Console.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
