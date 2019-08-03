@@ -12,7 +12,7 @@ namespace Dapper.UoW.ConsoleUI.Data.Commands
     public class AddPersonCommand : IAddCommand<int>, IAddCommandAsync<int>
     {
         // the sql statement to be executed
-        // sane could be achieved with select cast(scope_identity() as int)
+        // same could be achieved with select cast(scope_identity() as int)
         private const string _sql = @"
             DECLARE @Ident TABLE(n INT);
 			    INSERT INTO People(Name, Age, Address_Id)
