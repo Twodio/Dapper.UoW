@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,10 +13,12 @@ namespace Dapper.UoW
 		private bool _disposed;
 		private IDbConnection _connection;
 		private IDbTransaction _transaction;
+        private RetryOptions _options;
 
-        internal UnitOfWork(IDbConnection connection, bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        internal UnitOfWork(IDbConnection connection, RetryOptions Options = default, bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
 			_connection = connection;
+            _options = Options;
 			if (transactional)
             {
                 _transaction = connection.BeginTransaction(isolationLevel);
@@ -24,12 +27,12 @@ namespace Dapper.UoW
 
         public IEnumerable<T> Get<T>(IGetCommand<T> command)
         {
-            return command.Execute(_connection, _transaction);
+            return Retry.Invoke(() => command.Execute(_connection, _transaction), _options);
         }
 
         public IEnumerable<T> Get<T, TId>(IGetCommand<T, TId> command)
         {
-            return command.Execute(_connection, _transaction);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction), _options);
         }
 
         public T Add<T>(IAddCommand<T> command)
@@ -38,7 +41,7 @@ namespace Dapper.UoW
             {
                 throw new Exception($"The command {command.GetType()} requires a transaction");
             }
-            return command.Execute(_connection, _transaction);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction), _options);
         }
 
         public T Update<T>(IUpdateCommand<T> command)
@@ -47,7 +50,7 @@ namespace Dapper.UoW
             {
                 throw new Exception($"The command {command.GetType()} requires a transaction");
             }
-            return command.Execute(_connection, _transaction);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction), _options);
         }
 
         public T Delete<T>(IDeleteCommand<T> command)
@@ -56,17 +59,17 @@ namespace Dapper.UoW
             {
                 throw new Exception($"The command {command.GetType()} requires a transaction");
             }
-            return command.Execute(_connection, _transaction);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction), _options);
         }
 
         public Task<IEnumerable<T>> GetAsync<T>(IGetCommandAsync<T> command, CancellationToken cancellationToken = default)
         {
-            return command.Execute(_connection, _transaction, cancellationToken);
+            return Retry.InvokeAsync(()=> command.Execute(_connection, _transaction, cancellationToken), _options);
         }
 
         public Task<IEnumerable<T>> GetAsync<T, TId>(IGetCommandAsync<T, TId> command, CancellationToken cancellationToken = default)
         {
-            return command.Execute(_connection, _transaction, cancellationToken);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction, cancellationToken), _options);
         }
 
         public Task<T> AddAsync<T>(IAddCommandAsync<T> command, CancellationToken cancellationToken = default)
@@ -75,7 +78,7 @@ namespace Dapper.UoW
             {
                 throw new Exception($"The command {command.GetType()} requires a transaction");
             }
-            return command.Execute(_connection, _transaction, cancellationToken);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction, cancellationToken), _options);
         }
 
         public Task<T> UpdateAsync<T>(IUpdateCommandAsync<T> command, CancellationToken cancellationToken = default)
@@ -84,7 +87,7 @@ namespace Dapper.UoW
             {
                 throw new Exception($"The command {command.GetType()} requires a transaction");
             }
-            return command.Execute(_connection, _transaction, cancellationToken);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction, cancellationToken), _options);
         }
 
         public Task<T> DeleteAsync<T>(IDeleteCommandAsync<T> command, CancellationToken cancellationToken = default)
@@ -93,7 +96,7 @@ namespace Dapper.UoW
             {
                 throw new Exception($"The command {command.GetType()} requires a transaction");
             }
-            return command.Execute(_connection, _transaction, cancellationToken);
+            return Retry.Invoke(()=> command.Execute(_connection, _transaction, cancellationToken), _options);
         }
 
         public void Commit()

@@ -13,18 +13,18 @@ namespace Dapper.UoW
 		public UnitOfWorkFactory(string connectionString)
 			=> _connectionString = connectionString;
 
-		public IUnitOfWork Create(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+		public IUnitOfWork Create(bool transactional = false, RetryOptions options = default, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
 			var conn = new SqlConnection(_connectionString);
             conn.Open();
-            return new UnitOfWork(conn, transactional, isolationLevel);
+            return new UnitOfWork(conn, options, transactional, isolationLevel);
 		}
 
-        public async Task<IUnitOfWork> CreateAsync(bool transactional = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, CancellationToken cancellationToken = default)
+        public async Task<IUnitOfWork> CreateAsync(bool transactional = false, RetryOptions options = default, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, CancellationToken cancellationToken = default)
         {
             var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync(cancellationToken);
-            return new UnitOfWork(conn, transactional, isolationLevel);
+            return new UnitOfWork(conn, options, transactional, isolationLevel);
         }
 	}
 }

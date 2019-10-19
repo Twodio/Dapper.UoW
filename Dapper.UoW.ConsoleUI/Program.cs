@@ -14,15 +14,15 @@ namespace Dapper.UoW.ConsoleUI
 	class Program
     {
         // the connection string for the database you'll be using
-        private const string ConnectionString = @"your_connection_string";
+        private const string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Twodio\Source\Repos\DBTeste.mdf;Integrated Security=True;Connect Timeout=30";
 
 		static void Main(string[] args)
 		{
-            Console.WriteLine($"\nAdding a new entry to the database...\n");
-            var person = new PersonEntity { Name = "Jane Smith", Age = 28 };
-            var address = new AddressEntity { Street = "Somewhere", Region = "Somwehere" };
-            AddPerson(person, address);
-            Console.WriteLine($"\nIdentity check: {person?.Id}\n");
+            //Console.WriteLine($"\nAdding a new entry to the database...\n");
+            //var person = new PersonEntity { Name = "Jane Smith", Age = 28 };
+            //var address = new AddressEntity { Street = "Somewhere", Region = "Somwehere" };
+            //AddPerson(person, address);
+            //Console.WriteLine($"\nIdentity check: {person?.Id}\n");
 
             Console.WriteLine($"Fetching one result from database...\n");
             PrintPerson(1);
@@ -87,7 +87,9 @@ namespace Dapper.UoW.ConsoleUI
                 // initialize the connection builder
                 var factory = new UnitOfWorkFactory(ConnectionString);
                 // initialize the repository with transaction explicitly set to false
-                using (var uow = factory.Create())
+                // set the errors
+                Retry.AddError(207, "Sem descricao");
+                using (var uow = factory.Create(false))
                 {
                     var person = uow.Get(new GetPersonByIdCommand<int>(Id)).FirstOrDefault();
                     Console.WriteLine($"Person: {person?.Name} ({person?.Address?.Street})");
