@@ -10,3 +10,5 @@
 /Dapper.UoW.ConsoleUI/obj
 /Dapper.UoW.ConsoleUI/Dapper.UoW.ConsoleUI.csproj.user
 /.vs
+/Dapper.UnitOfWork/obj
+/Dapper.UnitOfWork.Example/obj
